@@ -79,7 +79,6 @@ const TodoList = ({
 
         <Box mt={2} textAlign="center" p={5}>
           <Link
-            fontSize="xl"
             color="gray.700"
             _dark={{
               color: "white",
@@ -95,7 +94,7 @@ const TodoList = ({
             p={3}
             m={2}
           >
-            Tasks for Today{" "}
+            Tasks for today
           </Link>
 
           <VStack spacing={"4"} mt={5}>
@@ -155,7 +154,7 @@ const TodoList = ({
             </Button>
           </Flex>
         </Flex>
-        {title.toLocaleLowerCase() == "anjal" ? (
+        {title.toLocaleLowerCase().includes("anjal") ? (
           <chakra.p>
             You mean{" "}
             <Badge
