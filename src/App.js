@@ -42,13 +42,10 @@ function App() {
   const removeTodo = (id) => {
     const newTodos = todos.filter((todo) => {
       if (todo.id == id) {
-        if (todo.title === "Anjal King 👑") {
-          console.log(todo.title == "Anjal King 👑");
-          console.log(todo.title);
-          console.log(todo);
+        if (todo.title.toLowerCase().includes("anjal")) {
           Swal.fire({
             title: "Can't disable the king, bitch!!!  ",
-            confirmButtonText: "Sorry",
+            confirmButtonText: "I am sorry King ",
           });
           return todo;
         }
@@ -63,13 +60,10 @@ function App() {
   const toggleStatus = (id) => {
     const newTodos = todos.map((todo) => {
       if (todo.id == id) {
-        if (todo.title === "Anjal King 👑") {
-          console.log(todo.title == "Anjal King 👑");
-          console.log(todo.title);
-          console.log(todo);
+        if (todo.title.toLowerCase().includes("anjal")) {
           Swal.fire({
             title: "Can't disable the king, bitch!!!  ",
-            confirmButtonText: "Sorry",
+            confirmButtonText: "I am sorry Lord",
           });
         } else {
           todo.completed = !todo.completed;
