@@ -64,6 +64,7 @@ const TodoList = ({
             _hover={{
               bg: "gray.500",
             }}
+            onClick={() => addTodo("Sujal is the boss")}
           >
             Sujal Subedi
           </Link>
@@ -127,7 +128,13 @@ const TodoList = ({
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
-            <Button colorScheme={"green"} onClick={() => addTodo(title)}>
+            <Button
+              colorScheme={"green"}
+              onClick={() => {
+                addTodo(title);
+                setTitle("");
+              }}
+            >
               <FaPlusCircle />
             </Button>
           </Flex>
