@@ -7,10 +7,20 @@ import {
   Button,
   VStack,
   Input,
+  useColorMode,
+  useColorModeValue,
+  Badge,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
 
-import { FaTrash, FaToggleOn, FaToggleOff, FaPlusCircle } from "react-icons/fa";
+import {
+  FaTrash,
+  FaToggleOn,
+  FaToggleOff,
+  FaPlusCircle,
+  FaSun,
+  FaMoon,
+} from "react-icons/fa";
 
 const TodoList = ({
   todos,
@@ -21,17 +31,10 @@ const TodoList = ({
   isAtleastOneCompleted,
 }) => {
   const [title, setTitle] = useState("");
+  const { colorMode, toggleColorMode } = useColorMode();
+  const colorOfTodoTask = useColorModeValue("black", "white");
   return (
-    <Flex
-      bg="#edf3f8"
-      _dark={{
-        bg: "#3e3e3e",
-      }}
-      p={50}
-      w="full"
-      alignItems="center"
-      justifyContent="center"
-    >
+    <Flex p={50} w="full" alignItems="center" justifyContent="center">
       <Box
         mx="auto"
         px={8}
@@ -69,11 +72,14 @@ const TodoList = ({
           >
             Sujal Subedi
           </Link>
+          <Button onClick={toggleColorMode}>
+            {colorMode == "dark" ? <FaSun /> : <FaMoon />}
+          </Button>
         </Flex>
 
-        <Box mt={2} textAlign="center">
+        <Box mt={2} textAlign="center" p={5}>
           <Link
-            fontSize="2xl"
+            fontSize="xl"
             color="gray.700"
             _dark={{
               color: "white",
@@ -86,17 +92,19 @@ const TodoList = ({
               },
               textDecor: "underline",
             }}
+            p={3}
+            m={2}
           >
             Tasks for Today{" "}
           </Link>
 
-          <VStack>
+          <VStack spacing={"4"} mt={5}>
             {todos &&
               todos.map((todo) => (
                 <HStack key={todo.id} opacity={todo.completed ? 0.78 : 1}>
                   <chakra.p
                     textDecoration={todo.completed ? "line-through" : ""}
-                    color={todo.completed ? "gray.300" : "black"}
+                    color={todo.completed ? "gray.300" : colorOfTodoTask}
                   >
                     {todo.title}
                   </chakra.p>
@@ -134,6 +142,7 @@ const TodoList = ({
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
+
             <Button
               colorScheme={"green"}
               onClick={() => {
@@ -146,6 +155,20 @@ const TodoList = ({
             </Button>
           </Flex>
         </Flex>
+        {title.toLocaleLowerCase() == "anjal" ? (
+          <chakra.p>
+            You mean{" "}
+            <Badge
+              colorScheme={"green"}
+              cursor="pointer"
+              onClick={() => setTitle("Anjal King 👑")}
+            >
+              KING 👑
+            </Badge>
+          </chakra.p>
+        ) : (
+          ""
+        )}
         <Button
           size="sm"
           margin={"0 auto"}

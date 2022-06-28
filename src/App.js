@@ -40,14 +40,41 @@ function App() {
   };
 
   const removeTodo = (id) => {
-    const newTodos = todos.filter((todo) => todo.id !== id);
+    const newTodos = todos.filter((todo) => {
+      if (todo.id == id) {
+        if (todo.title === "Anjal King 👑") {
+          console.log(todo.title == "Anjal King 👑");
+          console.log(todo.title);
+          console.log(todo);
+          Swal.fire({
+            title: "Can't disable the king, bitch!!!  ",
+            confirmButtonText: "Sorry",
+          });
+          return todo;
+        }
+      } else {
+        return todo;
+      }
+    });
     localStorage.setItem("todos", JSON.stringify(newTodos));
     setTodos(newTodos);
   };
 
   const toggleStatus = (id) => {
     const newTodos = todos.map((todo) => {
-      if (todo.id == id) todo.completed = !todo.completed;
+      if (todo.id == id) {
+        if (todo.title === "Anjal King 👑") {
+          console.log(todo.title == "Anjal King 👑");
+          console.log(todo.title);
+          console.log(todo);
+          Swal.fire({
+            title: "Can't disable the king, bitch!!!  ",
+            confirmButtonText: "Sorry",
+          });
+        } else {
+          todo.completed = !todo.completed;
+        }
+      }
       return todo;
     });
     localStorage.setItem("todos", JSON.stringify(newTodos));
