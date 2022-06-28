@@ -18,6 +18,7 @@ const TodoList = ({
   addTodo,
   removeTodo,
   clearAllCompleted,
+  isAtleastOneCompleted,
 }) => {
   const [title, setTitle] = useState("");
   return (
@@ -122,7 +123,12 @@ const TodoList = ({
           <Flex alignItems="center">
             <Input
               type="text"
-              placeholder="Throw mobile into the lake"
+              placeholder={
+                todos.length > 9
+                  ? "10 tasks are enough "
+                  : "Throw mobile into the lake"
+              }
+              disabled={todos.length > 9}
               m={1}
               border="3px solid green"
               value={title}
@@ -134,6 +140,7 @@ const TodoList = ({
                 addTodo(title);
                 setTitle("");
               }}
+              disabled={title.length < 3 || todos.length > 9}
             >
               <FaPlusCircle />
             </Button>
@@ -146,6 +153,7 @@ const TodoList = ({
           mt={6}
           display="block"
           onClick={() => clearAllCompleted()}
+          disabled={!isAtleastOneCompleted}
         >
           Clear Completed
         </Button>

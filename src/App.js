@@ -1,19 +1,31 @@
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import "./App.css";
 import TodoList from "./components/TodoList";
 
 function App() {
   const [todos, setTodos] = useState([]);
-  const [task, setNewTask] = useState("");
+  const [isAtleastOneCompleted, setIsAtLeastOneCompleted] = useState(false);
 
   useEffect(() => {
     setTodos(loadTodos());
   }, []);
+
+  useEffect(() => {
+    for (let i = 0; i < todos.length; i++) {
+      if (todos[i].completed) {
+        setIsAtLeastOneCompleted(true);
+        return;
+      }
+    }
+    setIsAtLeastOneCompleted(false);
+  }, [todos]);
   const loadTodos = () => {
     return JSON.parse(localStorage.getItem("todos") ?? "[]");
   };
 
   const addTodo = (title) => {
+    if (todos.length > 9) return;
     const newTodos = [
       ...todos,
       {
@@ -43,11 +55,29 @@ function App() {
   };
 
   const clearAllCompleted = () => {
-    if (!window.confirm("Are you sure")) return;
-    const newTodos = todos.filter((todo) => todo.completed !== true);
-    localStorage.setItem("todos", JSON.stringify(newTodos));
-    setTodos(newTodos);
+    Swal.fire({
+      title: "Are you sure want to remove all completed todos?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const newTodos = todos.filter((todo) => todo.completed !== true);
+        localStorage.setItem("todos", JSON.stringify(newTodos));
+        setTodos(newTodos);
+        Swal.fire(
+          "Deleted!",
+          "Your completed todos has been deleted.",
+          "success"
+        );
+      }
+    });
   };
+
+  const completeAllTodos = () => {};
   return (
     <>
       <TodoList
@@ -56,6 +86,7 @@ function App() {
         removeTodo={removeTodo}
         toggleStatus={toggleStatus}
         clearAllCompleted={clearAllCompleted}
+        isAtleastOneCompleted={isAtleastOneCompleted}
       />
     </>
   );
