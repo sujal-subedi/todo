@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 import TodoList from "./components/TodoList";
-import TodoContext from "./context/TodoContext";
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -51,16 +50,13 @@ function App() {
   };
   return (
     <>
-      <TodoContext.Provider value={{ todos }}>
-        Hiii This is react app
-        <TodoList
-          todos={todos}
-          addTodo={addTodo}
-          removeTodo={removeTodo}
-          toggleStatus={toggleStatus}
-          clearAllCompleted={clearAllCompleted}
-        />
-      </TodoContext.Provider>
+      <TodoList
+        todos={todos}
+        addTodo={addTodo}
+        removeTodo={removeTodo}
+        toggleStatus={toggleStatus}
+        clearAllCompleted={clearAllCompleted}
+      />
     </>
   );
 }
